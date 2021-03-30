@@ -123,14 +123,14 @@ const Addresses = () => {
 
     return (
         <div>
-            <nav class="navbar navbar-light bg-light">
-                <span class="navbar-brand mb-0 h1">Navbar</span>
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">ReadMe </a>
-                    </li>
+            <nav class="navbar navbar-dark bg-primary">
+                <span class="navbar-brand justify-content-end">Navbar</span>
+                <ul class="navbar-nav ">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">GitHub Repo</a>
+                        <a class="nav-link active" href="https://github.com/Laith-Kamaraldin/Administrate_InterviewProject#readme">ReadMe </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="https://github.com/Laith-Kamaraldin/Administrate_InterviewProject">GitHub Repo</a>
                     </li>
                 </ul>
             </nav>
@@ -143,20 +143,9 @@ const Addresses = () => {
             <div className="container">
                 <div className="row">
                 <div className="col-md-4 col-md-offset-2 bg-light border rounded-3">
-                <Tabs
-                    id="form-tabs"
-                    defaultActiveKey="addOrganization"
-                    activeKey = {key}
-                    onSelect= {(k) => setKey(k)}
-                >
-                    <Tab eventKey = "addPeople" title = "Add Contact">
-                        <AddPeople {...({formActionsContacts,currentId,contactValues})}/>
-                    </Tab>
-                    <Tab eventKey = "addOrganization" title = "Add Organization">
-                        <AddOrganizations {...({formActionsOrganizations,currentId,organizationsValues})}/>
-                    </Tab>
-                </Tabs>
-                  
+                
+                <AddPeople {...({formActionsContacts,currentId,contactValues})}/>
+                <AddOrganizations {...({formActionsOrganizations,currentId,organizationsValues})}/>
                 </div>
                     <div className="col-md-8 col-md-offset-2 bg-light border rounded-3 ">
 
@@ -166,18 +155,22 @@ const Addresses = () => {
                         Object.keys(organizationsValues).map(id =>{
                                         return <Card className="card" key={id}>
                                             <Accordion.Toggle as={Card.Header} eventKey="0">
-                                            <div className="organizationContent">
-                                            <p>{organizationsValues[id].organization}</p>
-                                            <p>{organizationsValues[id].mobile}</p>
-                                            <p>{organizationsValues[id].address}</p>
+                                            <table class="table2">
+                                                <thead>
+                                                    <tr>
+                                                    <th scope="col">{organizationsValues[id].organization}</th>
+                                                    <th scope="col">{organizationsValues[id].mobile}</th>
+                                                    <th scope="col">{organizationsValues[id].address}</th>
+                                                    <th scope="col"><a className="btn text-primary" onClick={()=> {setCurrentId(id)}}>
+                                                            <i className="fas fa-pencil-alt"/>
+                                                        </a>
+                                                        <a className="btn text-danger" onClick={()=> {onDeleteOrganizations(id)}}>
+                                                            <i className="fas fa-trash-alt"/>
+                                                        </a></th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
                                             
-                                                <a className="btn text-primary" onClick={()=> {setCurrentId(id)}}>
-                                                    <i className="fas fa-pencil-alt"/>
-                                                </a>
-                                                <a className="btn text-danger" onClick={()=> {onDeleteOrganizations(id)}}>
-                                                    <i className="fas fa-trash-alt"/>
-                                                </a>
-                                            </div>
                                             </Accordion.Toggle>
                                             <Accordion.Collapse eventKey="0">
                                                 <Card.Body>

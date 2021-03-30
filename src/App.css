@@ -1,15 +1,25 @@
 
-#root {
-  width: 100%;
-}
-.container {
-  max-width: '100%' !important;
-}
+.container-fluid{
+  padding-left: 0px;
+  padding-right: 0px;
+  }
+
 body{
 	background-color:white;
   max-width: 100%;
   overflow-x: hidden;
 }
+
+.navbar-nav{
+  flex-direction: row;
+  
+}
+
+.navbar-nav > li{
+  padding-left:10px;
+  padding-right:10px;
+}
+
 .table .thead-light th {
  
   color:white;
@@ -21,16 +31,25 @@ body{
 }
 
 
-
+.icons{
+  text-align: right;
+  float: right;
+}
 
 
 .hiddenRow {
     padding: 0 !important;
 }
 
+
+
 .card{
-  width: max;
+  display: flex;
 }
 
 .organizationContent{
   display: flex; justify-content: space-evenly; align-items: center}
+
+
+
+  
