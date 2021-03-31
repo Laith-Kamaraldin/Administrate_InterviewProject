@@ -16,9 +16,9 @@ const AddOrganizations = (props) => {
             })
         else
             setFieldValues({
-                ...props.organizationsValues[props.currentId]
+                ...props.organizations[props.currentId]
              })
-    }, [props.currentId, props.organizationsValues])
+    }, [props.currentId, props.organizations])
 
 
     const handleInputChange = e =>{
@@ -37,6 +37,8 @@ const AddOrganizations = (props) => {
 
 
     return (
+        <div>
+        <h5 class="formHeader">Add Organization</h5>
         <form autoComplete = "off" onSubmit={handleFormSubmit}>
 
             <div className="input-group mb-3">
@@ -52,10 +54,11 @@ const AddOrganizations = (props) => {
             </div>    
 
             <div className="form-group">
-            <input type="submit" value={props.currentId == '' ? "Add Organzation":"Update Organization"} className="btn btn-primary btn-block"/>
+            <input type="submit" value={props.currentId == '' ? "Submit Organzation":"Update Organization"} className="btn btn-primary btn-block"/>
         </div>
 
         </form>
+        </div>
     );
 }
 

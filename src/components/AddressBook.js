@@ -2,47 +2,33 @@ import React, {useState, useEffect } from "react";
 import AddOrganizations from "./OrganizationForm";
 import AddPeople from "./PeopleForm";
 import firebaseDB from '../firebase';
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
+// import Tabs from 'react-bootstrap/Tabs';
+// import Tab from 'react-bootstrap/Tab';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 
 const Addresses = () => {
-    const [key, setKey] = useState('home');
+    // ----------------State-----------------
+    const [isLoading, setIsLoading] = useState(false)
+    const [currentId,setCurrentId] = useState('')
+    const [organizations, setOrganizations] = useState({})
+    const [contacts, setContacts] = useState({})
 
-
-    var [contactValues, setContactValues] = useState([])
-    var [organizationsValues, setOrganizationsValues] = useState([])
-    var [currentId,setCurrentId] = useState('')
-
-
+    // ----------------Effect-----------------
     useEffect(()=>{
-        firebaseDB.child("Organizations").on('value',snapshot=>{
-            const val = snapshot.val()
-            if(val !== null) {
-                let contacts = null
-                firebaseDB.child("Contacts").orderByChild("organization").equalTo(val.organization).on('value',snapshot=>{
-                    const val = snapshot.val()
-                    if(val !== null) {
-                        contacts = val
-                        setContactValues(val)
-                    }
-                })
-                setOrganizationsValues({
-                    ...val,
-                    contacts: contacts ?? []
-                })
-            }
-        })
+        setIsLoading(true)
+        firebaseDB.child("Organizations").on('value',snapshot=>setOrganizations(snapshot.val()))
+        firebaseDB.child("Contacts").on("value", snapshot => setContacts(snapshot.val()))
+        setIsLoading(false)
     },[])
     
     const formActionsOrganizations = object=>{
-        if(currentId == '')
+        if(currentId === '')
             firebaseDB.child("Organizations").push(
                 object,
                 error => {
                     if(error){
-                        console.log(error);
+                        console.error(error);
                     }
                     else
                     setCurrentId('')
@@ -53,7 +39,7 @@ const Addresses = () => {
                 object,
                 error => {
                     if(error){
-                        console.log(error);
+                        console.error(error);
                     }else
                         setCurrentId('')
                 }
@@ -61,12 +47,12 @@ const Addresses = () => {
     }
 
     const formActionsContacts = object=>{
-        if(currentId == '')
+        if(currentId === '')
             firebaseDB.child("Contacts").push(
                 object,
                 error => {
                     if(error){
-                        console.log(error);
+                        console.error(error);
                     }
                     else
                     setCurrentId('')
@@ -77,7 +63,7 @@ const Addresses = () => {
                 object,
                 error => {
                     if(error){
-                        console.log(error);
+                        console.error(error);
                     }else
                         setCurrentId('')
                 }
@@ -89,7 +75,7 @@ const Addresses = () => {
             firebaseDB.child(`Contacts/${key}`).remove(
                 error => {
                     if(error){
-                        console.log(error);
+                        console.error(error);
                     }else
                         setCurrentId('');
                 }
@@ -102,7 +88,7 @@ const Addresses = () => {
             firebaseDB.child(`Organizations/${key}`).remove(
                 error => {
                     if(error){
-                        console.log(error);
+                        console.error(error);
                     }else
                         setCurrentId('');
                 }
@@ -113,7 +99,7 @@ const Addresses = () => {
 
     
 
-    return (
+    return isLoading ? <div>Loading...</div> : (
         <div>
             <nav class="navbar navbar-dark bg-primary">
                 <span class="navbar-brand justify-content-end">Navbar</span>
@@ -126,24 +112,30 @@ const Addresses = () => {
                     </li>
                 </ul>
             </nav>
+            <div className="jumbotron jumbotron-fluid">
+                <div className="container">
+                    <h1 className="display-4 text-center">Administrate Address Book</h1>
+                    <p className="lead text-center">Project made for the Administrate technincal challange.</p>
+                </div>
+            </div>
            
             <div className="container">
                 <div className="row">
                 <div className="col-md-4 col-md-offset-2 bg-light border rounded-3">
                 
-                <AddOrganizations {...({formActionsOrganizations,currentId,organizationsValues})}/>
-                <AddPeople {...({formActionsContacts,currentId, contactValues})}/>
+                <AddOrganizations {...({formActionsOrganizations,currentId,organizations})}/>
+                <AddPeople {...({formActionsContacts,currentId, contacts})}/>
                 
                 </div>
                     <div className="col-md-8 col-md-offset-2 bg-light border rounded-3 ">
-
+                    <h5>Organizations:</h5>
                     <div className="accoridian">
                 <Accordion>
                     {
-                        Object.keys(organizationsValues).map(id => {
-                            const organization = organizationsValues[id]
+                        Object.keys(organizations).map((id) => {
+                            const organization = organizations[id]
                                         return <Card className="card" key={id}>
-                                            <Accordion.Toggle as={Card.Header} eventKey="0">
+                                            <Accordion.Toggle as={Card.Header} eventKey={id}>
                                             <table class="table2">
                                                 <thead>
                                                     <tr>
@@ -161,7 +153,7 @@ const Addresses = () => {
                                             </table>
                                             
                                             </Accordion.Toggle>
-                                            <Accordion.Collapse eventKey="0">
+                                            <Accordion.Collapse eventKey={id}>
                                                 <Card.Body>
 
                                                         <table className="table table-responsive table-sm table-borderless table-stripped">
@@ -178,9 +170,9 @@ const Addresses = () => {
                                                     </thead>
                                                     <tbody>
                                                         {
-                                                            Object.keys(organization.contacts).map(id =>{
-                                                                const contact = organization.contacts[id]
-                                                                return <tr key={id}>
+                                                            Object.keys(contacts).map(id =>{
+                                                                const contact = contacts[id]
+                                                                return contact.organization === organization.organization ? <tr key={id}>
                                                                     <td>{contact.firstName}</td>
                                                                     <td>{contact.lastName}</td>
                                                                     <td>{contact.email}</td>
@@ -195,7 +187,7 @@ const Addresses = () => {
                                                                             <i className="fas fa-trash-alt"/>
                                                                         </a>
                                                                     </td>
-                                                                </tr>
+                                                                    </tr> : null
                                                                 })
                                                         }
                                                     </tbody>

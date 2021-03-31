@@ -20,9 +20,9 @@ const AddPeople = (props) => {
             })
         else
             setFieldValues({
-                ...props.contactValues[props.currentId]
+                ...props.contacts[props.currentId]
              })
-    }, [props.currentId, props.contactValues])
+    }, [props.currentId, props.contacts])
 
 
     const handleInputChange = e =>{
@@ -40,6 +40,8 @@ const AddPeople = (props) => {
   
 
     return ( 
+        <div>  
+        <h5 class="formHeader">Add Contact</h5>
         <form autoComplete = "off" onSubmit={handleFormSubmit}>
                    
             <div className="input-group mb-3">
@@ -73,6 +75,7 @@ const AddPeople = (props) => {
         
             
         </form>
+        </div>
     );
 }
 
