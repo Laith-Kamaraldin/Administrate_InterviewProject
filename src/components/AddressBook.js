@@ -17,28 +17,20 @@ const Addresses = () => {
 
 
     useEffect(()=>{
-        firebaseDB.child("Contacts").on('value',snapshot=>{
-            if(snapshot.val()!= null)
-            setContactValues({
-                ...snapshot.val()
-            })
-            else{
-                setContactValues({
-                    ...snapshot.val()
-                })
-            }
-        })
-    },[])
-
-    useEffect(()=>{
         firebaseDB.child("Organizations").on('value',snapshot=>{
-            if(snapshot.val()!= null)
-            setOrganizationsValues({
-                ...snapshot.val()
-            })
-            else{
+            const val = snapshot.val()
+            if(val !== null) {
+                let contacts = null
+                firebaseDB.child("Contacts").orderByChild("organization").equalTo(val.organization).on('value',snapshot=>{
+                    const val = snapshot.val()
+                    if(val !== null) {
+                        contacts = val
+                        setContactValues(val)
+                    }
+                })
                 setOrganizationsValues({
-                    ...snapshot.val()
+                    ...val,
+                    contacts: contacts ?? []
                 })
             }
         })
@@ -134,33 +126,30 @@ const Addresses = () => {
                     </li>
                 </ul>
             </nav>
-            <div className="jumbotron jumbotron-fluid">
-                <div className="container">
-                    <h1 className="display-4 text-center">Administrate Address Book</h1>
-                    <p className="lead text-center">Project made for the Administrate technincal challange.</p>
-                </div>
-            </div>
+           
             <div className="container">
                 <div className="row">
                 <div className="col-md-4 col-md-offset-2 bg-light border rounded-3">
                 
-                <AddPeople {...({formActionsContacts,currentId,contactValues})}/>
                 <AddOrganizations {...({formActionsOrganizations,currentId,organizationsValues})}/>
+                <AddPeople {...({formActionsContacts,currentId, contactValues})}/>
+                
                 </div>
                     <div className="col-md-8 col-md-offset-2 bg-light border rounded-3 ">
 
                     <div className="accoridian">
                 <Accordion>
                     {
-                        Object.keys(organizationsValues).map(id =>{
+                        Object.keys(organizationsValues).map(id => {
+                            const organization = organizationsValues[id]
                                         return <Card className="card" key={id}>
                                             <Accordion.Toggle as={Card.Header} eventKey="0">
                                             <table class="table2">
                                                 <thead>
                                                     <tr>
-                                                    <th scope="col">{organizationsValues[id].organization}</th>
-                                                    <th scope="col">{organizationsValues[id].mobile}</th>
-                                                    <th scope="col">{organizationsValues[id].address}</th>
+                                                    <th scope="col">{organization.organization}</th>
+                                                    <th scope="col">{organization.mobile}</th>
+                                                    <th scope="col">{organization.address}</th>
                                                     <th scope="col"><a className="btn text-primary" onClick={()=> {setCurrentId(id)}}>
                                                             <i className="fas fa-pencil-alt"/>
                                                         </a>
@@ -189,14 +178,15 @@ const Addresses = () => {
                                                     </thead>
                                                     <tbody>
                                                         {
-                                                            Object.keys(contactValues).map(id =>{
+                                                            Object.keys(organization.contacts).map(id =>{
+                                                                const contact = organization.contacts[id]
                                                                 return <tr key={id}>
-                                                                    <td>{contactValues[id].firstName}</td>
-                                                                    <td>{contactValues[id].lastName}</td>
-                                                                    <td>{contactValues[id].email}</td>
-                                                                    <td>{contactValues[id].mobile}</td>
-                                                                    <td>{contactValues[id].organization}</td>
-                                                                    <td>{contactValues[id].address}</td>
+                                                                    <td>{contact.firstName}</td>
+                                                                    <td>{contact.lastName}</td>
+                                                                    <td>{contact.email}</td>
+                                                                    <td>{contact.mobile}</td>
+                                                                    <td>{contact.organization}</td>
+                                                                    <td>{contact.address}</td>
                                                                     <td>
                                                                         <a className="btn text-primary" onClick={()=> {setCurrentId(id)}}>
                                                                             <i className="fas fa-pencil-alt"/>
