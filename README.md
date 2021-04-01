@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+## Administrate Technical Interview Submission
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### Brief:
 
-## Available Scripts
+Please write a small web application that models an address book. Your solution should present a simple user-interface and should persist the data, so that it is available after restarting any processes.
 
-In the project directory, you can run:
+Your address book should list organizations and people. It should allow the user to see the names and contact details of people in organizations, and to manage the people who are in an organization. It should store a name and contact details for each organization.
 
-### `yarn start`
+Your address book should allow organizations and people to be created, edited and deleted. The address book is for use by a single person; there is no need to build authentication and authorization in your submission. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Project Status
+Completed to meet assigned time limit of around four hours.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### Explanation:
 
-### `yarn test`
+It was requested that this project is done within a four hour time frame, the project clearly presents CRUD functionalities, basic design and database integration. Given more time I would mainly look into testing, code refactoring and more efficient design/ implementation.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation and Setup Instructions
 
-### `yarn build`
+#### Run the project:  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Clone down this repository. You will need `node` and `npm` installed globally on your machine.  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Installation:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+`npm install`  
 
-### `yarn eject`
+To Start Server:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+`npm start`  
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To Visit App:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`localhost:3000/`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+To View Demo:
 
-## Learn More
+`https://laith-kamaraldin.github.io/Administrate_InterviewProject/`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Reflection
+ 
+This project was done as a quick demonstration of skills for the Administrate Technical Interview. Project goals was to display a brief display of my skills to see whether I would be suitable for the role I am applying for. The project showcases skills I have learnt this far and applying them in a limited timeframe.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The project interface is served using React JS whereas the database is set up using Google Firebase. The reason I chose firebase over MySQL for this project is because of the given time limit, Firebase is quick and easy to setup, offers real-time updates and can retain information when page is refreshed which is exactly what I needed when considering the brief and time frame. 
 
-### Code Splitting
+When designing the UI I wanted to go with a design that is very simple and self-explanatory. I experimented using different features such as displaying add contact and organization in a tabbed design but ultimately decided against it as I wanted a design that any user would be able to open and use without facing any issues.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Given more time there are many things I would do different/ add to the project first of which is testing. Testing is essential when releasing any product and I would make sure to write suitable tests to make sure everything works as intended. I would review the design I believe the way I currently display the data could be improved it is currently displayed using and accordion that then contains the contacts inside of it a tree table design could be more suitable. Furthermore more features could be added such as filtering, table joins and exporting data.
