@@ -12,7 +12,7 @@ const AddPeople = (props) => {
     }
 
     var [fieldValues,setFieldValues] = useState(defaultValues);
-
+    //method for filling form with old values to update.
     useEffect(() => {
         if(props.currentId=='')
             setFieldValues({
@@ -38,7 +38,7 @@ const AddPeople = (props) => {
         props.formActionsContacts(fieldValues)
     }
   
-
+    //setting up form structure
     return ( 
         <div>  
         <h5 class="formHeader">Add Contact</h5>

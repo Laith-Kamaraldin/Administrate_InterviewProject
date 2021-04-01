@@ -15,6 +15,7 @@ const Addresses = () => {
     const [contacts, setContacts] = useState({})
 
     // ----------------Effect-----------------
+    //Using snapshot to set values from the right place in the db
     useEffect(()=>{
         setIsLoading(true)
         firebaseDB.child("Organizations").on('value',snapshot=>setOrganizations(snapshot.val()))
@@ -22,6 +23,7 @@ const Addresses = () => {
         setIsLoading(false)
     },[])
     
+    //Action methods used to update old entries
     const formActionsOrganizations = object=>{
         if(currentId === '')
             firebaseDB.child("Organizations").push(
@@ -70,6 +72,7 @@ const Addresses = () => {
             )
     }
 
+    //delete methods used to delete old enteries
     const onDeleteContacts = key =>{
         if(window.confirm('Warning! proceeding will delete this entry are your sure you want to continue?')){
             firebaseDB.child(`Contacts/${key}`).remove(
@@ -98,7 +101,7 @@ const Addresses = () => {
     }
 
     
-
+    //page structure
     return isLoading ? <div>Loading...</div> : (
         <div>
             <nav class="navbar navbar-dark bg-primary">
@@ -132,6 +135,7 @@ const Addresses = () => {
                     <div className="accoridian">
                 <Accordion>
                     {
+                        //Grabbing and Storing values into the Accordian from the DB
                         Object.keys(organizations).map((id) => {
                             const organization = organizations[id]
                                         return <Card className="card" key={id}>

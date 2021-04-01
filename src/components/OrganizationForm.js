@@ -9,6 +9,7 @@ const AddOrganizations = (props) => {
 
     var [fieldValues,setFieldValues] = useState(values);
 
+    //method for filling form with old values to update.
     useEffect(() => {
         if(props.currentId=='')
             setFieldValues({
@@ -35,7 +36,7 @@ const AddOrganizations = (props) => {
     }
 
 
-
+    //form for organisations
     return (
         <div>
         <h5 class="formHeader">Add Organization</h5>
